@@ -13,7 +13,7 @@ import java.util.List;
  * Separar la lógica de base de datos aquí hace el código
  * mucho más limpio y fácil de mantener.
  *
- * DAO = Data Access Object, patrón muy común en DAM/DAW.
+ *
  * ----------------------------------------------------------
  */
 public class PartidaDAO {

@@ -6,7 +6,7 @@ package neonbreaker.modelo;
  * Representa una fila del leaderboard: nombre del jugador,
  * puntuación y fecha de la partida.
  *
- * Es un POJO (Plain Old Java Object): solo tiene atributos,
+ *
  * constructor y getters. Sin lógica de negocio.
  * ----------------------------------------------------------
  */

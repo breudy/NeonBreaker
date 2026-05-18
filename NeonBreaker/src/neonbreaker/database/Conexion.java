@@ -16,7 +16,7 @@ import java.sql.SQLException;
  */
 public class Conexion {
 
-    // Datos de conexión — cámbialos si tu MySQL usa otro puerto o contraseña
+
     private static final String URL      = "jdbc:mysql://localhost:3306/neonbreaker";
     private static final String USUARIO  = "root";       // tu usuario de MySQL
     private static final String PASSWORD = "mysql";       // tu contraseña de MySQL

@@ -15,7 +15,7 @@ import java.awt.*;
  * Extiende JPanel y sobreescribe paintComponent() para
  * dibujar frame a frame con Graphics2D.
  *
- * Esta clase NO tiene lógica de juego: solo dibuja lo que
+ * Esta clase no tiene lógica de juego: solo dibuja lo que
  * le dice el Controlador.
  * ----------------------------------------------------------
  */
