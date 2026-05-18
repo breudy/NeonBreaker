@@ -87,11 +87,8 @@ public class VentanaJuego extends JFrame {
         // ---- Guardar en la base de datos ----
         try {
             PartidaDAO.guardarPuntuacion(idUsuario, puntuacion);
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,
-                "No se pudo guardar la puntuación:\n" + ex.getMessage(),
-                "Error de base de datos",
-                JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         // ---- Opciones al jugador ----
@@ -133,9 +130,8 @@ public class VentanaJuego extends JFrame {
                 try {
                     int id = PartidaDAO.obtenerOCrearUsuario(nombre);
                     new VentanaJuego(nombre, id);
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null,
-                        "Error de base de datos:\n" + ex.getMessage());
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
                 }
             },
             () -> new PantallaLeaderboard(null)

@@ -3,6 +3,7 @@ package neonbreaker.vista;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.function.Consumer;
 
 /**
  * Clase PantallaInicio (Vista)
@@ -18,12 +19,15 @@ public class PantallaInicio extends JFrame {
     private JTextField campoNombre;
     private JButton    botonJugar;
     private JButton    botonLeaderboard;
+    private final String tipografia = "Monospaced";
+    private final Color rosaNeon = new Color(255, 0, 127);
+    private final Color negro = new Color(0, 0, 0);
 
     /**
      * @param onJugar        Callback que recibe el username cuando pulsa Jugar
      * @param onLeaderboard  Callback para abrir el leaderboard sin jugar
      */
-    public PantallaInicio(java.util.function.Consumer<String> onJugar, Runnable onLeaderboard) {
+    public PantallaInicio(Consumer<String> onJugar, Runnable onLeaderboard) {
 
         setTitle("Neon Breaker — Inicio");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,9 +39,9 @@ public class PantallaInicio extends JFrame {
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Fondo negro con grid sutil (igual que en el juego)
-                g.setColor(new Color(0, 0, 0));
+                g.setColor(negro);
                 g.fillRect(0, 0, getWidth(), getHeight());
-                g.setColor(new Color(255, 0, 127, 12));
+                g.setColor(negro);
                 for (int x = 0; x < getWidth(); x += 40) g.drawLine(x, 0, x, getHeight());
                 for (int y = 0; y < getHeight(); y += 40) g.drawLine(0, y, getWidth(), y);
             }
@@ -51,36 +55,36 @@ public class PantallaInicio extends JFrame {
 
         // ---- Título ----
         JLabel titulo = new JLabel("NEON BREAKER", SwingConstants.CENTER);
-        titulo.setFont(new Font("Monospaced", Font.BOLD, 28));
-        titulo.setForeground(new Color(255, 0, 127));
+        titulo.setFont(new Font(tipografia, Font.BOLD, 28));
+        titulo.setForeground(rosaNeon);
         gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2;
         panel.add(titulo, gbc);
 
         // ---- Subtítulo ----
         JLabel subtitulo = new JLabel("ARCADE EXPERIENCE", SwingConstants.CENTER);
-        subtitulo.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        subtitulo.setFont(new Font(tipografia, Font.PLAIN, 12));
         subtitulo.setForeground(new Color(203, 48, 224));
         gbc.gridy = 1;
         panel.add(subtitulo, gbc);
 
         // ---- Separador visual ----
         JSeparator sep = new JSeparator();
-        sep.setForeground(new Color(255, 0, 127));
+        sep.setForeground(rosaNeon);
         gbc.gridy = 2; gbc.insets = new Insets(5, 20, 20, 20);
         panel.add(sep, gbc);
 
         // ---- Etiqueta del campo ----
         JLabel etiqueta = new JLabel("INTRODUCE TU NICKNAME:");
-        etiqueta.setFont(new Font("Monospaced", Font.BOLD, 13));
+        etiqueta.setFont(new Font(tipografia, Font.BOLD, 13));
         etiqueta.setForeground(Color.WHITE);
         gbc.gridy = 3; gbc.insets = new Insets(5, 20, 5, 20);
         panel.add(etiqueta, gbc);
 
         // ---- Campo de texto ----
         campoNombre = new JTextField();
-        campoNombre.setFont(new Font("Monospaced", Font.PLAIN, 16));
+        campoNombre.setFont(new Font(tipografia, Font.PLAIN, 16));
         campoNombre.setBackground(new Color(20, 20, 20));
-        campoNombre.setForeground(new Color(255, 0, 127));
+        campoNombre.setForeground(rosaNeon);
         campoNombre.setCaretColor(Color.WHITE);
         campoNombre.setBorder(BorderFactory.createLineBorder(new Color(203, 48, 224), 2));
         campoNombre.setHorizontalAlignment(JTextField.CENTER);
@@ -89,7 +93,7 @@ public class PantallaInicio extends JFrame {
 
         // ---- Botón JUGAR ----
         botonJugar = new JButton("▷  JUGAR AHORA");
-        estilizarBoton(botonJugar, new Color(255, 0, 127));
+        estilizarBoton(botonJugar, rosaNeon);
         gbc.gridy = 5; gbc.insets = new Insets(20, 20, 5, 20);
         panel.add(botonJugar, gbc);
 
@@ -134,7 +138,7 @@ public class PantallaInicio extends JFrame {
 
     /** Aplica el estilo neon a un botón */
     private void estilizarBoton(JButton boton, Color color) {
-        boton.setFont(new Font("Monospaced", Font.BOLD, 14));
+        boton.setFont(new Font(tipografia, Font.BOLD, 14));
         boton.setBackground(color);
         boton.setForeground(Color.WHITE);
         boton.setFocusPainted(false);

@@ -54,11 +54,8 @@ public class PantallaLeaderboard extends JDialog {
                     p.getFecha()
                 });
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this,
-                "Error al cargar el ranking:\n" + ex.getMessage(),
-                "Error de base de datos",
-                JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
 
         JTable tabla = new JTable(modeloTabla);

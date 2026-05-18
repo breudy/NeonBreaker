@@ -17,6 +17,9 @@ import java.util.List;
  * ----------------------------------------------------------
  */
 public class PartidaDAO {
+    private static final String URL      = "jdbc:mysql://localhost:3306/neonbreaker";
+    private static final String USUARIO  = "root";       // tu usuario de MySQL
+    private static final String PASSWORD = "mysql";       // tu contraseña de MySQL
 
     /**
      * Busca un usuario por su nombre. Si no existe, lo crea.
@@ -25,12 +28,12 @@ public class PartidaDAO {
      * @param username El nickname introducido por el jugador
      * @return El id del usuario en la base de datos
      */
-    public static int obtenerOCrearUsuario(String username) throws SQLException {
+    public static int obtenerOCrearUsuario(String username) {
 
         // Primero buscamos si ya existe ese nombre
         String sqlBuscar = "SELECT id_usuario FROM USUARIOS WHERE username = ?";
 
-        try (Connection con = Conexion.getConexion();
+        try (Connection con = DriverManager.getConnection(URL, USUARIO, PASSWORD);
              PreparedStatement ps = con.prepareStatement(sqlBuscar)) {
 
             ps.setString(1, username);
@@ -40,12 +43,14 @@ public class PartidaDAO {
             if (rs.next()) {
                 return rs.getInt("id_usuario");
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
 
         // Si no existía, lo insertamos y devolvemos el id generado
         String sqlInsertar = "INSERT INTO USUARIOS (username) VALUES (?)";
 
-        try (Connection con = Conexion.getConexion();
+        try (Connection con = DriverManager.getConnection(URL, USUARIO, PASSWORD);
              PreparedStatement ps = con.prepareStatement(sqlInsertar, Statement.RETURN_GENERATED_KEYS)) {
 
             ps.setString(1, username);
@@ -56,9 +61,10 @@ public class PartidaDAO {
             if (keys.next()) {
                 return keys.getInt(1);
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
-
-        throw new SQLException("No se pudo crear el usuario.");
+        return 0;
     }
 
     /**
@@ -67,16 +73,18 @@ public class PartidaDAO {
      * @param idUsuario  El id del jugador
      * @param puntuacion Los puntos obtenidos en la partida
      */
-    public static void guardarPuntuacion(int idUsuario, int puntuacion) throws SQLException {
+    public static void guardarPuntuacion(int idUsuario, int puntuacion) {
 
         String sql = "INSERT INTO PUNTUACIONES (id_usuario, puntuacion_obtenida) VALUES (?, ?)";
 
-        try (Connection con = Conexion.getConexion();
+        try (Connection con = DriverManager.getConnection(URL, USUARIO, PASSWORD);
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, idUsuario);
             ps.setInt(2, puntuacion);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -87,7 +95,7 @@ public class PartidaDAO {
      *
      * @return Lista de objetos Puntuacion ordenados de mayor a menor
      */
-    public static List<Puntuacion> obtenerTop10() throws SQLException {
+    public static List<Puntuacion> obtenerTop10() {
 
         List<Puntuacion> lista = new ArrayList<>();
 
@@ -100,9 +108,9 @@ public class PartidaDAO {
                 JOIN USUARIOS u ON p.id_usuario = u.id_usuario
                 ORDER BY p.puntuacion_obtenida DESC
                 LIMIT 10
-                """;
+                """;/*no tengo ni idea de porque aqui hay triple comilla*/
 
-        try (Connection con = Conexion.getConexion();
+        try (Connection con = DriverManager.getConnection(URL, USUARIO, PASSWORD);
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
@@ -112,8 +120,9 @@ public class PartidaDAO {
                 String fecha       = rs.getString("fecha_partida");
                 lista.add(new Puntuacion(username, puntos, fecha));
             }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
-
         return lista;
     }
 }

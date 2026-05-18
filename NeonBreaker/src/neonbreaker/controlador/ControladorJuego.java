@@ -137,7 +137,8 @@ public class ControladorJuego {
      * Orden: mover → colisionar → comprobar estado → redibujar.
      */
     private void actualizar() {
-        if (!juegoActivo || partidaTerminada) return;
+        if (!(!juegoActivo || partidaTerminada)) {
+
 
         // 1. Mover paleta según teclas pulsadas
         if (teclaIzquierda) paleta.moverIzquierda();
@@ -151,6 +152,7 @@ public class ControladorJuego {
 
         // 4. Redibujar la pantalla
         panelJuego.repaint();
+        }
     }
 
     /**
